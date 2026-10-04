@@ -1,11 +1,15 @@
-
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
+    "type": "module",
     "test": "echo\"ERROR: no test specified\" && exit 1",
     "wacth": "node  --watch ./backend/server"
   },
   "dependencies": {
-    "type": "module",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",

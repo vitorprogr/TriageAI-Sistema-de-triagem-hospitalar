@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
-
+    
 // middlewares
 app.use(cors());
 app.use(express.json());
@@ -16,21 +16,47 @@ app.use(express.json());
 
 // criar usuario - create
 
-app.post("/", async (req, res)=> {
+/* app.post("/", async (req, res)=> {
     try{
-        const { nome, email} = req.body;
+        const {email} = req.body;
 
         const [result] = await pool.query(
-            "INSERT INTO usuarios (nome, email) VALUES (?, ?)", 
-            [nome, email]
+            "INSERT INTO usuarios (email) VALUES (?)", 
+            [email]
         );
-        res.status(201).json({ id: result.insertId, nome, email});
+        res.status(201).json({ id: result.insertId, email});
     }  catch(e){
+        console.error("Erro do MySQL:", e); 
+        res.status(500).json({erro: "falha ao criar usuario"});
+    }
+});
+*/
+
+app.post("/", async (req, res)=> {
+    // RASTREADOR 1: Vê se a requisição chegou no Express
+    console.log("Passo 1: Alguém chamou a rota POST!"); 
+    console.log("Passo 2: O que chegou no req.body?", req.body);
+
+    try{
+        const {email, senha} = req.body;
+        console.log("Passo 3: Tentando inserir no banco o e-mail:", email, senha);
+
+        const [result] = await pool.query(
+            "INSERT INTO usuarios (email, senha) VALUES (?,?)", 
+            [email,senha]
+        );
+        
+        console.log("Passo 4: Sucesso no banco! ID criado:", result.insertId);
+        res.status(201).json({ id: result.insertId, email, senha});
+    }  catch(e){
+        // RASTREADOR 5: Erro real
+        console.error("Passo 5: ERRO DO BANCO DE DADOS AQUI ->", e); 
         res.status(500).json({erro: "falha ao criar usuario"});
     }
 });
 
 //listar usuarios - read
+
 app.get("/", async (req, res) => {
     try{
         const[rows] = await pool.query("SELECT * FROM usuarios");
