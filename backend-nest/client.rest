@@ -1,0 +1,4 @@
+###appControllerGetHello
+
+# @name AppControllerGetHello
+GET http://localHost/3000/home/exemplo/
