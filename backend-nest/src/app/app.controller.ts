@@ -6,16 +6,14 @@ import { get } from 'http';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('hello')
-  
+  //@Get('hello')
   getHello(): string {
     const retorno = "retorno";
     return retorno;
   }
 
-  @Get ('exemplo')
-
+  //@Get ('exemplo')
   exemplo(){
-    return 'exemplo de rota'
+    return 'exemplo de rota';
   }
 }
